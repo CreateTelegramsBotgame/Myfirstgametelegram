@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+ <html lang='ru'>
+ <head>
+<meta charset='UTF=8'>
+<title>Моя игра</title>
+ <style>
+
+    #gameBtn {
+      width: 150px;
+      height: 150px;
+      padding :0;
+      border-radius: 50%;
+      font-size: 48px;
+      color: red;
+      background: darkred;
+    }
+
+    #closeBtn{position:fixed;
+             top: 20px;
+             width: 40px;
+             right: 20px;
+             padding:0;
+             border-radius:50%;
+             background: red;
+             color:white;
+             font-size: 20px;}
+
+   body{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     height: 100vh;
+     margin:0;
+     font-family: sans-serif;
+   }
+
+   #score{
+     font-size: 64px;
+     font-weight: bold;
+     color: aqua;
+     margin-bottom: 20px;
+     text-shadow: 0 0 10px aqua;
+   }
+
+   .popup{
+     position:absolute;
+     font-size: 32px;
+     color: aqua;
+     font-weight: bold;
+     pointer-events: none;
+     animation: floatUp 0.8s ease-out forwards;
+   }
+
+   @keyframes floatUp {
+   0% {
+     opacity:1;
+     transform: translateY(0);
+   }
+     100%{
+       opacity:0;
+       transform: translateY(-80px);
+     }
+   }
+    </style>
+ </head>
+ <body>
+   <div id="score">0</div>
+    <button id="closeBtn">×</button>
+   <button id="gameBtn" onclick="addPoint()">+</button>
+
+   <script>
+     let score = 0;
+
+     function addPoint() {
+       score++;
+       document.getElementById('score').textContent = score;
+
+       //создаем всплывающий +1
+       const popup = document.createElement('div')
+       popup.className='popup';
+       popup.textContent='+1';
+
+       //позиционируем его у кнопки
+       const btn=document.getElementById('gameBtn');
+       const rect=btn.getBoundingClientRect();
+       popup.style.left=(rect.left+rect.width/2)+'px';
+       popup.style.top=(rect.top)+'px';
+
+       document.body.appendChild(popup)
+
+       //удаляем через 0.8 секунды
+       setTimeout(()=>popup.remove(), 800);
+     }
+   </script>
+ </body>
+</html>
